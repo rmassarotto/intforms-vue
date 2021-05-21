@@ -36,14 +36,38 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/bootstrap
-    'bootstrap-vue/nuxt',
+    "bootstrap-vue/nuxt",
+    "@nuxtjs/axios",
+    // "@nuxtjs/auth"
   ],
+
+  bootstrapVue: {
+    // Install the `IconsPlugin` plugin (in addition to `BootstrapVue` plugin)
+    icons: true
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    babel: {
+      plugins: [
+        ['@babel/plugin-proposal-private-methods', { loose: true }]
+      ]
+    }
   },
 
   axios: {
     baseURL: "http://localhost:3005"
-  }
+  },
+
+  // auth: {
+  //   strategies: {
+  //     local: {
+  //       endpoints: {
+  //         login: { url: "login", method: "post" },
+  //         user: { url: "usuario", method: "get", propertyName: false },
+  //         logout: false
+  //       }
+  //     }
+  //   }
+  // }
 }

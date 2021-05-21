@@ -6,10 +6,8 @@
 
       <b-collapse id="notesBar" is-nav>
         <b-navbar-nav class="ml-auto">
-          <b-nav-item href="/listAval">minhas avaliações</b-nav-item>
-          <b-nav-item href="/listForm">meus formularios</b-nav-item>
-          <b-nav-item-dropdown :text="primeiroNome" right>
-            <b-dropdown-item href="perfil">Perfil</b-dropdown-item>
+          <b-nav-item href="/formulario/list">meus formularios</b-nav-item>
+          <b-nav-item-dropdown text="Nome Usuário" right>
             <b-dropdown-item href="#" @click.prevent="logout"
               >Sair</b-dropdown-item
             >
@@ -30,12 +28,12 @@ export default {
     // usuario() {
     //   return this.$store.state.auth.user;
     // },
-    primeiroNome() {
-      if (this.usuario) {
-        const [nome] = this.usuario.nome.split(" ");
-        return nome;
-      }
-    },
+    // primeiroNome() {
+    //   if (this.usuario) {
+    //     const [nome] = this.usuario.nome.split(" ");
+    //     return nome;
+    //   }
+    // },
   },
   methods: {
     async logout() {
