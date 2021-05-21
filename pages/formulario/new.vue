@@ -2,7 +2,7 @@
   <div>
     <b-container>
       <h2 class="mb-4">Novo Formulário</h2>
-      <b-form @submit="save" @reset="onReset" v-if="show">
+      <b-form @submit="save" @reset="reset" v-if="show">
         <b-row>
           <b-col sm="8">
             <b-form-group label="Nome do formulário">
@@ -37,30 +37,36 @@
 
         <br />
 
-        <div v-for="(questao, index) in form.questoes" :key="index">
-          <b-card :title="questao.titulo" class="text-left">
-            <br />
-            <div
-              v-for="(alternativa, index) in questao.alternativas"
-              :key="index"
-            >
-              <b-card-text>
-                <b-icon
-                  icon="square"
-                  v-if="questao.tipoAlternativa === 2"
-                ></b-icon>
-                <b-icon
-                  icon="circle"
-                  v-if="questao.tipoAlternativa === 1"
-                ></b-icon>
-                {{ alternativa }}
-              </b-card-text>
+        <b-card no-body header="Questões do formulários">
+          <b-list-group flush>
+            <div v-for="(questao, index) in form.questoes" :key="index">
+              <b-list-group-item>
+                <h3>{{ questao.titulo }}</h3>
+                <br />
+                <div
+                  v-for="(alternativa, index) in questao.alternativas"
+                  :key="index"
+                >
+                  <b-icon
+                    icon="square"
+                    v-if="questao.tipoAlternativa === 2"
+                  ></b-icon>
+                  <b-icon
+                    icon="circle"
+                    v-if="questao.tipoAlternativa === 1"
+                  ></b-icon>
+                  {{ alternativa }}
+                </div>
+              </b-list-group-item>
             </div>
-          </b-card>
-        </div>
+            <b-list-group-item v-if="form.questoes.length === 0"
+              >Nenhuma questão inserida!</b-list-group-item
+            >
+          </b-list-group>
+        </b-card>
 
         <br />
-        <div class="text-right">
+        <div class="text-right" v-if="form.questoes.length !== 0">
           <b-button type="submit" variant="primary">Salvar</b-button>
           <b-button type="reset" variant="danger">Limpar</b-button>
         </div>
@@ -103,15 +109,14 @@ export default {
         .post("questionario", this.form)
         .then(function (response) {
           console.log(response);
-          // self.$router.push("/formulario/list");
+          self.$router.push("/formulario/list");
         })
         .catch(function (error) {
           console.log(error);
         });
     },
-    onReset(event) {
+    reset(event) {
       event.preventDefault();
-      // Reset our form values
       this.form.nome = "";
       this.form.categoria = null;
       this.form.questoes = [];

@@ -16,7 +16,7 @@
       </b-collapse>
     </b-navbar>
 
-    <div class="container">
+    <div class="container mb-5">
       <Nuxt />
     </div>
   </div>
