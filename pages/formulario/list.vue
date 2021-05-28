@@ -11,35 +11,19 @@
 
       <br />
       <b-list-group>
-        <b-list-group-item
-          class="d-flex justify-content-between align-items-center"
-        >
-          Cras justo odio
-          <b-dropdown text="Ações" dropleft size="sm">
-            <b-dropdown-item href="#">Gerar QR</b-dropdown-item>
-            <b-dropdown-item href="#">Resultados</b-dropdown-item>
-          </b-dropdown>
-        </b-list-group-item>
-
-        <b-list-group-item
-          class="d-flex justify-content-between align-items-center"
-        >
-          Dapibus ac facilisis in
-          <b-dropdown text="Ações" dropleft size="sm">
-            <b-dropdown-item href="#">Gerar QR</b-dropdown-item>
-            <b-dropdown-item href="#">Resultados</b-dropdown-item>
-          </b-dropdown>
-        </b-list-group-item>
-
-        <b-list-group-item
-          class="d-flex justify-content-between align-items-center"
-        >
-          Morbi leo risus
-          <b-dropdown text="Ações" dropleft size="sm">
-            <b-dropdown-item href="#">Gerar QR</b-dropdown-item>
-            <b-dropdown-item href="#">Resultados</b-dropdown-item>
-          </b-dropdown>
-        </b-list-group-item>
+        <div v-for="(questionario, index) in questionarios" :key="index">
+          <b-list-group-item
+            class="d-flex justify-content-between align-items-center"
+          >
+            {{ questionario.nome }}
+            <b-dropdown text="Ações" dropleft size="sm">
+              <b-dropdown-item @click="gerarQR(questionario.id)"
+                >Gerar QR</b-dropdown-item
+              >
+              <b-dropdown-item href="avaliacao">Resultados</b-dropdown-item>
+            </b-dropdown>
+          </b-list-group-item>
+        </div>
       </b-list-group>
     </b-container>
   </div>
@@ -48,6 +32,21 @@
 <script>
 export default {
   layout: "navbar",
+  data() {
+    return {
+      questionarios: [],
+    };
+  },
+  async fetch() {
+    const { data } = await this.$axios.get("questionario");
+    this.questionarios = data;
+    console.log(this.questionarios);
+  },
+  methods: {
+    gerarQR(id) {
+      this.$router.push({ name: "avaliacao", params: { id } });
+    },
+  },
 };
 </script>
 

@@ -18,8 +18,14 @@
               id="tipoAlternativa"
               v-model="questao.tipoAlternativa"
               :options="tiposAlternativas"
+              value-field="id"
+              text-field="nome"
               required
-            ></b-form-select>
+            >
+              <b-form-select-option value="null"
+                >Selecione</b-form-select-option
+              >
+            </b-form-select>
           </b-form-group>
         </b-col>
       </b-row>
@@ -27,7 +33,7 @@
       <br />
 
       <b-card v-if="questao.tipoAlternativa" :title="questao.titulo">
-        <br />
+        <hr />
         <div v-for="(alt, index) in questao.alternativas" :key="index">
           <b-row class="mb-2">
             <b-col
@@ -83,13 +89,13 @@ export default {
         alternativas: [],
       },
       alternativa: "",
-      tiposAlternativas: [
-        { text: "Tipos Alternativas", value: null },
-        { text: "Multipla Escolha", value: 1 },
-        { text: "Checkbox", value: 2 },
-        { text: "Resposta Curta", value: 3 },
-      ],
+      tiposAlternativas: [],
     };
+  },
+  async fetch() {
+    const { data } = await this.$axios.get("tipo");
+    this.tiposAlternativas = data;
+    console.log(this.tiposAlternativas);
   },
   methods: {
     addAlternativa() {
