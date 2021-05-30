@@ -12,7 +12,7 @@
           <b-card :title="questao.titulo" class="mb-2">
             <b-card-text>
               <br />
-              <b-form-group>
+              <!-- <b-form-group>
                 <div
                   v-for="(alternativa, indexAlt) of questao.alternativas"
                   :key="indexAlt"
@@ -28,7 +28,25 @@
                     </b-progress-bar>
                   </b-progress>
                 </div>
-              </b-form-group>
+              </b-form-group> -->
+              <div v-if="questao.tipoQuestaoId === 1">
+                <apexchart
+                  type="bar"
+                  height="350"
+                  :options="questao.chartOptions"
+                  :series="questao.series"
+                ></apexchart>
+              </div>
+              <div v-if="questao.tipoQuestaoId === 2">
+                <div class="col-md-12 d-flex justify-content-center">
+                  <apexchart
+                    type="pie"
+                    width="380"
+                    :options="questao.chartOptions"
+                    :series="questao.series"
+                  ></apexchart>
+                </div>
+              </div>
             </b-card-text>
           </b-card>
         </div>
@@ -41,8 +59,12 @@
 </template>
 
 <script>
+import VueApexCharts from "vue-apexcharts";
 export default {
   layout: "navbar",
+  components: {
+    apexchart: VueApexCharts,
+  },
   data() {
     return {
       questionarioId: this.$route.params.id,
@@ -64,41 +86,117 @@ export default {
       );
       this.respostaQuestionario = resRespostas.data;
 
-      await this.setContagemRespostas(
+      await this.setContagemRespostasChats(
         this.questionario,
         this.respostaQuestionario
       );
     }
   },
   methods: {
-    setContagemRespostas(questionario, respostas) {
+    setContagemRespostasChats(questionario, respostas) {
       for (const indexQ in questionario.questoes) {
         let totalRespostasCount = null;
+        let tipoQuestaoId =
+          questionario.questoes[indexQ].alternativas[0].tipoId;
+        let series = null; //Quantidades de cada alternativa
+        let chartOptions = null; //Titulo de cada alternativa
+
+        if (tipoQuestaoId === 1) {
+          series = [{ data: [] }]; //Quantidades de cada alternativa
+          chartOptions = {
+            chart: {
+              type: "bar",
+              height: 350,
+            },
+            plotOptions: {
+              bar: {
+                borderRadius: 4,
+                horizontal: true,
+              },
+            },
+            dataLabels: {
+              enabled: true,
+            },
+            xaxis: {
+              max: null,
+              categories: [], //Titulo de cada alternativa
+            },
+          };
+        } else if (tipoQuestaoId === 2) {
+          series = []; //Quantidades de cada alternativa
+          chartOptions = {
+            chart: {
+              width: 480,
+              type: "pie",
+            },
+            labels: [], //Titulo de cada alternativa
+            responsive: [
+              {
+                breakpoint: 480,
+                options: {
+                  chart: {
+                    width: 200,
+                  },
+                  legend: {
+                    position: "bottom",
+                  },
+                },
+              },
+            ],
+          };
+        }
+
         for (const indexA in questionario.questoes[indexQ].alternativas) {
+          if (tipoQuestaoId === 1) {
+            chartOptions.xaxis.categories.push(
+              questionario.questoes[indexQ].alternativas[indexA].texto
+            );
+          } else if (tipoQuestaoId === 2) {
+            chartOptions.labels.push(
+              questionario.questoes[indexQ].alternativas[indexA].texto
+            );
+          }
+
           let possuiResposta = respostas.filter(
             (e) =>
               e.alternativaid ==
               questionario.questoes[indexQ].alternativas[indexA].id
           );
+
           if (possuiResposta.length !== 0) {
-            questionario.questoes[indexQ].alternativas[indexA] = {
-              ...questionario.questoes[indexQ].alternativas[indexA],
-              count: parseInt(possuiResposta[0].count),
-            };
+            if (tipoQuestaoId === 1) {
+              series[0].data.push(parseInt(possuiResposta[0].count));
+            } else if (tipoQuestaoId === 2) {
+              series.push(parseInt(possuiResposta[0].count));
+            }
+            // questionario.questoes[indexQ].alternativas[indexA] = {
+            //   ...questionario.questoes[indexQ].alternativas[indexA],
+            //   count: parseInt(possuiResposta[0].count),
+            // };
             totalRespostasCount += parseInt(possuiResposta[0].count);
           } else {
-            questionario.questoes[indexQ].alternativas[indexA] = {
-              ...questionario.questoes[indexQ].alternativas[indexA],
-              count: 0,
-            };
+            if (tipoQuestaoId === 1) {
+              series[0].data.push(0);
+            } else if (tipoQuestaoId === 2) {
+              series.push(0);
+            }
+            // questionario.questoes[indexQ].alternativas[indexA] = {
+            //   ...questionario.questoes[indexQ].alternativas[indexA],
+            //   count: 0,
+            // };
           }
+        }
+
+        if (tipoQuestaoId === 1) {
+          chartOptions.xaxis.max = totalRespostasCount;
         }
         questionario.questoes[indexQ] = {
           ...questionario.questoes[indexQ],
-          totalCount: totalRespostasCount,
+          chartOptions: chartOptions,
+          series: series,
+          tipoQuestaoId: tipoQuestaoId,
         };
       }
-      console.log(this.questionario);
       this.loading = false;
     },
   },
