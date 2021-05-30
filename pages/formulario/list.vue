@@ -20,7 +20,9 @@
               <b-dropdown-item @click="gerarQR(questionario.id)"
                 >Gerar QR</b-dropdown-item
               >
-              <b-dropdown-item href="avaliacao">Resultados</b-dropdown-item>
+              <b-dropdown-item @click="resultados(questionario.id)"
+                >Resultados</b-dropdown-item
+              >
             </b-dropdown>
           </b-list-group-item>
         </div>
@@ -44,7 +46,11 @@ export default {
   },
   methods: {
     gerarQR(id) {
+      // this.$router.push({ name: "qrcode", params: { id } });
       this.$router.push({ name: "avaliacao", params: { id } });
+    },
+    resultados(id) {
+      this.$router.push({ name: "resultado", params: { id } });
     },
   },
 };

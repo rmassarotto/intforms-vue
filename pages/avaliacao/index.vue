@@ -78,10 +78,12 @@ export default {
     };
   },
   async fetch() {
-    const { data } = await this.$axios.get(
-      `questionario/${this.questionarioId}`
-    );
-    this.setQuestoesQuestionario(data);
+    if (this.questionarioId) {
+      const { data } = await this.$axios.get(
+        `questionario/${this.questionarioId}`
+      );
+      this.setQuestoesQuestionario(data);
+    }
   },
   methods: {
     setQuestoesQuestionario(questionario) {
@@ -119,7 +121,7 @@ export default {
         .post("respostaQuestionario", form)
         .then(function (response) {
           console.log(response);
-          // self.$router.push("/formulario/list");
+          self.$router.push("/formulario/list");
         })
         .catch(function (error) {
           console.log(error);
