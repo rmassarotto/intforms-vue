@@ -38,7 +38,7 @@ export default {
     // https://go.nuxtjs.dev/bootstrap
     "bootstrap-vue/nuxt",
     "@nuxtjs/axios",
-    // "@nuxtjs/auth"
+    "@nuxtjs/auth"
   ],
 
   bootstrapVue: {
@@ -59,15 +59,16 @@ export default {
     baseURL: "http://localhost:3005"
   },
 
-  // auth: {
-  //   strategies: {
-  //     local: {
-  //       endpoints: {
-  //         login: { url: "login", method: "post" },
-  //         user: { url: "usuario", method: "get", propertyName: false },
-  //         logout: false
-  //       }
-  //     }
-  //   }
-  // }
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: "login", method: "post" },
+          user: { url: "usuario", method: "get", propertyName: false },
+          logout: false
+        },
+        tokenType: ''
+      }
+    }
+  }
 }

@@ -4,7 +4,7 @@
       <b-jumbotron>
         <template #header>Resultados</template>
 
-        <template #lead> {{ questionario.nome }}</template>
+        <template #lead class="ml-3"> {{ questionario.nome }}</template>
 
         <hr class="my-4" />
 
@@ -62,6 +62,7 @@
 import VueApexCharts from "vue-apexcharts";
 export default {
   layout: "navbar",
+  middleware: "auth",
   components: {
     apexchart: VueApexCharts,
   },

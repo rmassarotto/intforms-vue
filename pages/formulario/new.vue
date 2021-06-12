@@ -79,6 +79,7 @@
 import NovaAlternativa from "../../components/alternativa/new";
 export default {
   layout: "navbar",
+  middleware: "auth",
   components: {
     NovaAlternativa,
   },

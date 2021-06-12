@@ -1,13 +1,16 @@
 <template>
   <div>
     <b-container>
-      <div class="text-center">
-        <b-button href="/formulario/new">Novo Formulário</b-button>
-      </div>
-
-      <hr id="divisor" />
-
-      <h2>Meus Formulários</h2>
+      <b-row>
+        <b-col cols="9">
+          <h2>Meus Formulários</h2>
+        </b-col>
+        <b-col class="text-right">
+          <b-button pill href="/formulario/new" variant="primary"
+            ><b-icon icon="clipboard-plus"></b-icon> Criar formulário</b-button
+          >
+        </b-col>
+      </b-row>
 
       <br />
       <b-list-group>
@@ -34,6 +37,7 @@
 <script>
 export default {
   layout: "navbar",
+  middleware: "auth",
   data() {
     return {
       questionarios: [],
@@ -46,8 +50,8 @@ export default {
   },
   methods: {
     gerarQR(id) {
-      // this.$router.push({ name: "qrcode", params: { id } });
-      this.$router.push({ name: "avaliacao", params: { id } });
+      this.$router.push({ name: "qrcode", params: { id } });
+      // this.$router.push({ name: "avaliacao", params: { id } });
     },
     resultados(id) {
       this.$router.push({ name: "resultado", params: { id } });

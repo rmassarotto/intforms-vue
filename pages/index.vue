@@ -28,6 +28,7 @@
 <script>
 export default {
   layout: "navbar",
+  middleware: "auth",
 };
 </script>
 

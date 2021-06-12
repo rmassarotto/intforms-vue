@@ -36,6 +36,7 @@
 import VueQr from "vue-qr";
 export default {
   layout: "navbar",
+  middleware: "auth",
   components: {
     VueQr,
   },
