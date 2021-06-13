@@ -7,7 +7,7 @@
           <b-col sm="8">
             <b-form-group label="Nome do formulário">
               <b-form-input
-                id="input-1"
+                id="input-nome"
                 v-model="form.nome"
                 placeholder="Nome do formulário"
                 required
@@ -15,9 +15,23 @@
             </b-form-group>
           </b-col>
           <b-col sm="4">
-            <b-form-group label="Categoria">
+            <b-form-group>
+              <div class="label-categoria">
+                <b-row>
+                  <b-col sm="10"> Categoria </b-col>
+                  <b-col sm="2" class="text-right">
+                    <a href="#" v-b-modal.modal-categoria
+                      ><b-icon icon="plus-square"></b-icon
+                    ></a>
+                  </b-col>
+                </b-row>
+
+                <ModalCategoria
+                  @updateCategoria="loadCategoria"
+                ></ModalCategoria>
+              </div>
               <b-form-select
-                id="input-3"
+                id="input-categoria"
                 v-model="form.categoriaId"
                 :options="categorias"
                 value-field="id"
@@ -53,6 +67,7 @@
 <script>
 import NovaAlternativa from "../../components/alternativa/FormNovaAlternativa";
 import ListaQuestoes from "../../components/questao/ListNovaQuestao";
+import ModalCategoria from "../../components/questao/ModalCategoria";
 
 export default {
   layout: "navbar",
@@ -60,6 +75,7 @@ export default {
   components: {
     NovaAlternativa,
     ListaQuestoes,
+    ModalCategoria,
   },
   data() {
     return {
@@ -73,10 +89,13 @@ export default {
     };
   },
   async fetch() {
-    const { data } = await this.$axios.get("categoria");
-    this.categorias = data;
+    this.loadCategoria();
   },
   methods: {
+    async loadCategoria() {
+      const { data } = await this.$axios.get("categoria");
+      this.categorias = data;
+    },
     addQuestao(questao) {
       this.form.questoes.push(questao);
     },
@@ -86,6 +105,7 @@ export default {
       await this.$axios
         .post("questionario", this.form)
         .then(function () {
+          self.reset();
           self.$swal
             .fire({
               icon: "success",
@@ -106,8 +126,7 @@ export default {
           console.log(error);
         });
     },
-    reset(event) {
-      event.preventDefault();
+    reset() {
       this.form.nome = "";
       this.form.categoria = null;
       this.form.questoes = [];
@@ -121,4 +140,7 @@ export default {
 </script>
 
 <style scoped>
+.label-categoria {
+  padding-bottom: 7px;
+}
 </style>

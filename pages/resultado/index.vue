@@ -12,23 +12,6 @@
           <b-card :title="questao.titulo" class="mb-2">
             <b-card-text>
               <br />
-              <!-- <b-form-group>
-                <div
-                  v-for="(alternativa, indexAlt) of questao.alternativas"
-                  :key="indexAlt"
-                >
-                  <h6>{{ alternativa.texto }}</h6>
-                  <b-progress
-                    variant="dark"
-                    show-value
-                    :max="questao.totalCount"
-                    class="mb-3"
-                  >
-                    <b-progress-bar :value="alternativa.count">
-                    </b-progress-bar>
-                  </b-progress>
-                </div>
-              </b-form-group> -->
               <div v-if="questao.tipoQuestaoId === 1">
                 <apexchart
                   type="bar"

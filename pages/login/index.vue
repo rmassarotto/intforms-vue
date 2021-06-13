@@ -56,7 +56,6 @@ export default {
             senha: this.senha,
           },
         });
-
         this.$router.push("/");
       } catch (e) {
         this.$swal.fire({
