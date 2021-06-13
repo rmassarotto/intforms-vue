@@ -31,39 +31,14 @@
             </b-form-group>
           </b-col>
         </b-row>
+
         <hr />
 
         <NovaAlternativa @addQuestao="addQuestao"></NovaAlternativa>
 
         <br />
 
-        <b-card no-body header="Questões do formulários">
-          <b-list-group flush>
-            <div v-for="(questao, index) in form.questoes" :key="index">
-              <b-list-group-item>
-                <h3>{{ questao.titulo }}</h3>
-                <br />
-                <div
-                  v-for="(alternativa, index) in questao.alternativas"
-                  :key="index"
-                >
-                  <b-icon
-                    icon="square"
-                    v-if="questao.tipoAlternativa === 2"
-                  ></b-icon>
-                  <b-icon
-                    icon="circle"
-                    v-if="questao.tipoAlternativa === 1"
-                  ></b-icon>
-                  {{ alternativa }}
-                </div>
-              </b-list-group-item>
-            </div>
-            <b-list-group-item v-if="form.questoes.length === 0"
-              >Nenhuma questão inserida!</b-list-group-item
-            >
-          </b-list-group>
-        </b-card>
+        <ListaQuestoes v-model="form.questoes"></ListaQuestoes>
 
         <br />
         <div class="text-right" v-if="form.questoes.length !== 0">
@@ -76,12 +51,15 @@
 </template>
 
 <script>
-import NovaAlternativa from "../../components/alternativa/new";
+import NovaAlternativa from "../../components/alternativa/FormNovaAlternativa";
+import ListaQuestoes from "../../components/questao/ListNovaQuestao";
+
 export default {
   layout: "navbar",
   middleware: "auth",
   components: {
     NovaAlternativa,
+    ListaQuestoes,
   },
   data() {
     return {
@@ -97,7 +75,6 @@ export default {
   async fetch() {
     const { data } = await this.$axios.get("categoria");
     this.categorias = data;
-    console.log(this.categorias);
   },
   methods: {
     addQuestao(questao) {
@@ -108,9 +85,22 @@ export default {
       let self = this;
       await this.$axios
         .post("questionario", this.form)
-        .then(function (response) {
-          console.log(response);
-          self.$router.push("/formulario/list");
+        .then(function () {
+          self.$swal
+            .fire({
+              icon: "success",
+              title: "Signed in successfully",
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+            })
+            .then((result) => {
+              if (result.dismiss === self.$swal.DismissReason.timer) {
+                self.$router.push("/formulario/list");
+              }
+            });
         })
         .catch(function (error) {
           console.log(error);

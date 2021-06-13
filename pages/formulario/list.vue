@@ -20,12 +20,26 @@
           >
             {{ questionario.nome }}
             <b-dropdown text="Ações" dropleft size="sm">
-              <b-dropdown-item @click="gerarQR(questionario.id)"
-                >Gerar QR</b-dropdown-item
-              >
-              <b-dropdown-item @click="resultados(questionario.id)"
-                >Resultados</b-dropdown-item
-              >
+              <b-dropdown-item @click="gerarQR(questionario.id)">
+                <b-row>
+                  <b-col sm="8"> Gerar QR </b-col>
+                  <b-col sm="4"><b-icon icon="columns-gap"></b-icon></b-col>
+                </b-row>
+              </b-dropdown-item>
+              <b-dropdown-item @click="resultados(questionario.id)">
+                <b-row>
+                  <b-col sm="8">Resultados </b-col>
+                  <b-col sm="4"><b-icon icon="graph-up"></b-icon></b-col>
+                </b-row>
+              </b-dropdown-item>
+              <b-dropdown-item @click="remover(questionario.id)">
+                <b-row>
+                  <b-col sm="8" class="text-danger">Remover </b-col>
+                  <b-col sm="4"
+                    ><b-icon icon="trash-fill" variant="danger"></b-icon
+                  ></b-col>
+                </b-row>
+              </b-dropdown-item>
             </b-dropdown>
           </b-list-group-item>
         </div>
@@ -46,7 +60,6 @@ export default {
   async fetch() {
     const { data } = await this.$axios.get("questionario");
     this.questionarios = data;
-    console.log(this.questionarios);
   },
   methods: {
     gerarQR(id) {
@@ -55,6 +68,28 @@ export default {
     },
     resultados(id) {
       this.$router.push({ name: "resultado", params: { id } });
+    },
+    remover(id) {
+      console.log("remover");
+      this.$swal
+        .fire({
+          title: "Deletar formuário?",
+          text: "Você não poderá reverter essa ação!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#d33",
+          confirmButtonText: "Sim, deletar!",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.remove(id);
+          }
+        });
+    },
+    async remove(id) {
+      await this.$axios.delete(`questionario/${id}`);
+      const { data } = await this.$axios.get("questionario");
+      this.questionarios = data;
     },
   },
 };

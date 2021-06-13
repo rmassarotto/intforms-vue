@@ -59,6 +59,11 @@ export default {
 
         this.$router.push("/");
       } catch (e) {
+        this.$swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Email ou senha incorretos",
+        });
         console.log(e);
       }
     },

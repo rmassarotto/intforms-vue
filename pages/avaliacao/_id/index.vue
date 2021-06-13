@@ -68,7 +68,7 @@
 
 <script>
 export default {
-  layout: "navbar",
+  layout: "default",
   data() {
     return {
       questionarioId: this.$route.params.id,
@@ -121,7 +121,7 @@ export default {
         .post("respostaQuestionario", form)
         .then(function (response) {
           console.log(response);
-          self.$router.push("/formulario/list");
+          self.$router.push("/conclusao");
         })
         .catch(function (error) {
           console.log(error);

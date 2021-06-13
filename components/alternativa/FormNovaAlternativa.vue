@@ -80,7 +80,7 @@
 <script>
 export default {
   components: {},
-
+  name: "f-new-alternativa",
   data() {
     return {
       questao: {
@@ -95,7 +95,6 @@ export default {
   async fetch() {
     const { data } = await this.$axios.get("tipo");
     this.tiposAlternativas = data;
-    console.log(this.tiposAlternativas);
   },
   methods: {
     addAlternativa() {
@@ -111,23 +110,6 @@ export default {
       this.questao.alternativas = [];
       this.alternativa = "";
     },
-    // onSubmit(event) {
-    //   event.preventDefault();
-    //   alert(JSON.stringify(this.form));
-    // },
-    // onReset(event) {
-    //   event.preventDefault();
-    //   // Reset our form values
-    //   this.form.email = "";
-    //   this.form.name = "";
-    //   this.form.categoria = null;
-    //   this.form.checked = [];
-    //   // Trick to reset/clear native browser form validation state
-    //   this.show = false;
-    //   this.$nextTick(() => {
-    //     this.show = true;
-    //   });
-    // },
   },
 };
 </script>
