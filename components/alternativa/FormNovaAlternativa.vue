@@ -32,7 +32,11 @@
 
       <br />
 
-      <b-card v-if="questao.tipoAlternativa" :title="questao.titulo">
+      <b-card
+        bg-variant="light"
+        v-if="questao.tipoAlternativa"
+        :title="questao.titulo"
+      >
         <hr />
         <div v-for="(alt, index) in questao.alternativas" :key="index">
           <b-row class="mb-2">

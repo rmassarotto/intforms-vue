@@ -57,7 +57,8 @@ export default {
   },
 
   axios: {
-    baseURL: "http://localhost:3005"
+    baseURL: "https://intform-api.herokuapp.com/"
+    // baseURL: "http://localhost:3005"
   },
 
   auth: {
