@@ -8,7 +8,7 @@
               <b-card style="max-width: 20rem">
                 <div class="text-center">
                   <vue-qr
-                    :text="`localhost:3000/avaliacao/` + questionario.id"
+                    :text="`https://intform-vue.herokuapp.com/avaliacao/` + questionario.id"
                     qid="qrQuestionario"
                     :size="260"
                   ></vue-qr>
