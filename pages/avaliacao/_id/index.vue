@@ -69,6 +69,7 @@
 <script>
 export default {
   layout: "default",
+  middleware: "guest",
   data() {
     return {
       questionarioId: this.$route.params.id,
@@ -115,12 +116,12 @@ export default {
         questionario: this.questionario,
         questoes: this.questoes,
       };
-      console.log(form);
       let self = this;
       await this.$axios
         .post("respostaQuestionario", form)
         .then(function (response) {
           console.log(response);
+          self.$store.dispatch("conclusao/concluir", true);
           self.$router.push("/conclusao");
         })
         .catch(function (error) {
