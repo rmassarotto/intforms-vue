@@ -58,19 +58,22 @@ export default {
     };
   },
   async fetch() {
-    const { data } = await this.$axios.get("questionario");
-    this.questionarios = data;
+    await this.loadFormularios();
   },
   methods: {
+    async loadFormularios() {
+      const { data } = await this.$axios.get(
+        `questionario/usuario/${this.$store.state.auth.user.id}`
+      );
+      this.questionarios = data;
+    },
     gerarQR(id) {
       this.$router.push({ name: "qrcode", params: { id } });
-      // this.$router.push({ name: "avaliacao", params: { id } });
     },
     resultados(id) {
       this.$router.push({ name: "resultado", params: { id } });
     },
-    remover(id) {
-      console.log("remover");
+    async remover(id) {
       this.$swal
         .fire({
           title: "Deletar formuário?",
@@ -80,9 +83,10 @@ export default {
           confirmButtonColor: "#d33",
           confirmButtonText: "Sim, deletar!",
         })
-        .then((result) => {
+        .then(async (result) => {
           if (result.isConfirmed) {
-            this.remove(id);
+            await this.remove(id);
+            await this.loadFormularios();
           }
         });
     },

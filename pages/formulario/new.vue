@@ -83,6 +83,7 @@ export default {
         nome: "",
         categoriaId: null,
         questoes: [],
+        usuarioId: null,
       },
       categorias: [],
       show: true,
@@ -101,6 +102,7 @@ export default {
     },
     async save(e) {
       e.preventDefault();
+      this.form.usuarioId = this.$store.state.auth.user.id;
       let self = this;
       await this.$axios
         .post("questionario", this.form)
