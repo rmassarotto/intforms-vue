@@ -41,8 +41,8 @@
         <div v-for="(alt, index) in questao.alternativas" :key="index">
           <b-row class="mb-2">
             <b-col
-              sm="12"
-              class="text-left"
+              sm="auto"
+              class="text-left pr-1"
               v-if="questao.tipoAlternativa != 3"
             >
               <b-icon
@@ -53,12 +53,23 @@
                 icon="circle"
                 v-if="questao.tipoAlternativa === 1"
               ></b-icon>
-              {{ alt }}
+            </b-col>
+
+            <div class="alternativa">
+              <b-col sm="auto" class="pl-1 pr-1">
+                {{ alt }}
+              </b-col>
+            </div>
+
+            <b-col class="trash-icon pl-2">
+              <a href="#" @click="removeAlternativa(index)"
+                ><b-icon icon="trash" variant="danger"></b-icon
+              ></a>
             </b-col>
           </b-row>
         </div>
 
-        <b-row>
+        <b-row class="mt-3">
           <b-col sm="11">
             <b-form-input
               id="alternativa"
@@ -114,6 +125,22 @@ export default {
       this.questao.alternativas = [];
       this.alternativa = "";
     },
+    removeAlternativa(index) {
+      this.questao.alternativas.splice(index, 1);
+    },
   },
 };
 </script>
+<style scoped>
+.trash-icon {
+  display: none;
+}
+
+.alternativa:hover + .trash-icon {
+  display: block;
+}
+
+.trash-icon:hover {
+  display: block;
+}
+</style>
