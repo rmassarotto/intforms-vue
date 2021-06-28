@@ -6,37 +6,47 @@
           <h2>Meus Formulários</h2>
         </b-col>
         <b-col class="text-right">
-          <b-button pill href="/formulario/new" variant="primary"
-            ><b-icon icon="clipboard-plus"></b-icon> Criar formulário</b-button
-          >
+          <b-button pill href="/formulario/new" variant="primary">
+            <b-row no-gutters>
+              <div>
+                <b-icon icon="clipboard-plus"></b-icon>
+              </div>
+              <div class="d-none d-lg-block">&nbsp; Criar formulário</div>
+            </b-row>
+          </b-button>
         </b-col>
       </b-row>
 
       <br />
+
       <b-list-group>
         <div v-for="(questionario, index) in questionarios" :key="index">
           <b-list-group-item
             class="d-flex justify-content-between align-items-center"
           >
-            {{ questionario.nome }}
+            {{ questionario.id }} - &nbsp;{{ questionario.nome }}
             <b-dropdown text="Ações" dropleft size="sm">
               <b-dropdown-item @click="gerarQR(questionario.id)">
                 <b-row>
                   <b-col sm="8"> Gerar QR </b-col>
-                  <b-col sm="4"><b-icon icon="columns-gap"></b-icon></b-col>
+                  <b-col sm="4" class="d-none d-sm-block"
+                    ><b-icon icon="columns-gap"></b-icon
+                  ></b-col>
                 </b-row>
               </b-dropdown-item>
               <b-dropdown-item @click="resultados(questionario.id)">
                 <b-row>
                   <b-col sm="8">Resultados </b-col>
-                  <b-col sm="4"><b-icon icon="graph-up"></b-icon></b-col>
+                  <b-col sm="4" class="d-none d-sm-block"
+                    ><b-icon icon="graph-up"></b-icon
+                  ></b-col>
                 </b-row>
               </b-dropdown-item>
               <b-dropdown-item @click="remover(questionario.id)">
                 <b-row>
                   <b-col sm="8" class="text-danger">Remover </b-col>
-                  <b-col sm="4"
-                    ><b-icon icon="trash-fill" variant="danger"></b-icon
+                  <b-col sm="4" class="d-none d-sm-block">
+                    <b-icon icon="trash-fill" variant="danger"></b-icon
                   ></b-col>
                 </b-row>
               </b-dropdown-item>
