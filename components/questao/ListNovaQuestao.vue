@@ -4,7 +4,7 @@
       <div v-for="(questao, index) in value" :key="index">
         <b-list-group-item>
           <b-row>
-            <b-col sm="11">
+            <b-col>
               <h3>{{ questao.titulo }}</h3>
             </b-col>
             <b-col class="text-right">

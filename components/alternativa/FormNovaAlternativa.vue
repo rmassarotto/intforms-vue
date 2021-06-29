@@ -39,12 +39,8 @@
       >
         <hr />
         <div v-for="(alt, index) in questao.alternativas" :key="index">
-          <b-row class="mb-2">
-            <b-col
-              sm="auto"
-              class="text-left pr-1"
-              v-if="questao.tipoAlternativa != 3"
-            >
+          <div class="mb-2 ml-2 d-flex flex-row">
+            <div class="text-center pr-1" v-if="questao.tipoAlternativa != 3">
               <b-icon
                 icon="square"
                 v-if="questao.tipoAlternativa === 2"
@@ -53,12 +49,12 @@
                 icon="circle"
                 v-if="questao.tipoAlternativa === 1"
               ></b-icon>
-            </b-col>
+            </div>
 
             <div class="alternativa">
-              <b-col sm="auto" class="pl-1 pr-1">
+              <div class="pl-1 pr-1">
                 {{ alt }}
-              </b-col>
+              </div>
             </div>
 
             <b-col class="trash-icon pl-2">
@@ -66,22 +62,21 @@
                 ><b-icon icon="trash" variant="danger"></b-icon
               ></a>
             </b-col>
-          </b-row>
+          </div>
         </div>
 
-        <b-row class="mt-3">
-          <b-col sm="11">
-            <b-form-input
-              id="alternativa"
-              v-model="alternativa"
-              placeholder="Insira a alternativa aqui"
-              required
-            ></b-form-input>
-          </b-col>
-          <b-col sm="1">
-            <b-button pill @click="addAlternativa">+</b-button>
-          </b-col>
-        </b-row>
+        <b-input-group>
+          <b-form-input
+            id="alternativa"
+            v-model="alternativa"
+            placeholder="Insira a alternativa aqui"
+            required
+          ></b-form-input>
+
+          <b-input-group-append>
+            <b-button @click="addAlternativa">+</b-button>
+          </b-input-group-append>
+        </b-input-group>
       </b-card>
       <div class="text-center mt-3">
         <b-button v-if="questao.alternativas.length" @click="addQuestao">

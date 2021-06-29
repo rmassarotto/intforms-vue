@@ -18,8 +18,8 @@
             <b-form-group>
               <div class="label-categoria">
                 <b-row>
-                  <b-col sm="10"> Categoria </b-col>
-                  <b-col sm="2" class="text-right">
+                  <b-col> Categoria </b-col>
+                  <b-col class="text-right">
                     <a href="#" v-b-modal.modal-categoria
                       ><b-icon icon="plus-square"></b-icon
                     ></a>

@@ -2,7 +2,7 @@
   <div>
     <b-container>
       <b-row>
-        <b-col cols="9">
+        <b-col>
           <h2>Meus Formulários</h2>
         </b-col>
         <b-col class="text-right">
