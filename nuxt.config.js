@@ -39,7 +39,8 @@ export default {
     "bootstrap-vue/nuxt",
     "@nuxtjs/axios",
     "@nuxtjs/auth",
-    'vue-sweetalert2/nuxt'
+    'vue-sweetalert2/nuxt',
+    'vue-social-sharing/nuxt',
   ],
 
   bootstrapVue: {

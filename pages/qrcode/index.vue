@@ -5,22 +5,43 @@
         <div class="col-md-12 d-flex justify-content-center">
           <div class="align-self-center">
             <div class="container">
-              <b-card style="max-width: 20rem">
-                <div class="text-center">
-                  <vue-qr
-                    :text="`https://intform-vue.herokuapp.com/avaliacao/` + questionario.id"
-                    qid="qrQuestionario"
-                    :size="260"
-                  ></vue-qr>
-                </div>
-                <b-card-body>
-                  <b-card-title>{{ questionario.nome }}</b-card-title>
-                  <b-card-text>
-                    Aponte a camera do seu celular para o QRcode acima para
-                    realizar o questionário
-                  </b-card-text>
-                </b-card-body>
-              </b-card>
+              <b-row>
+                <b-card style="max-width: 20rem" class="mb-3">
+                  <div class="text-center">
+                    <vue-qr
+                      :text="
+                        `https://intform-vue.herokuapp.com/avaliacao/` +
+                        questionario.id
+                      "
+                      qid="qrQuestionario"
+                      :size="260"
+                    ></vue-qr>
+                  </div>
+                  <b-card-body>
+                    <b-card-title>{{ questionario.nome }}</b-card-title>
+                    <b-card-text>
+                      Aponte a camera do seu celular para o QRcode acima para
+                      realizar o questionário
+                    </b-card-text>
+                  </b-card-body>
+                </b-card>
+              </b-row>
+              <b-row align-h="end">
+                <ShareNetwork
+                  network="whatsapp"
+                  :url="
+                    `https://intform-vue.herokuapp.com/avaliacao/` +
+                    questionario.id
+                  "
+                  title="Link de acesso ao formulário!"
+                  :description="questionario.nome"
+                >
+                  <b-button size="sm" variant="success"
+                    ><b-icon icon="share"></b-icon> &nbsp; Whatsapp</b-button
+                  >
+                  <!-- <a href="#" class="btn btn-success">Whatsapp</a> -->
+                </ShareNetwork>
+              </b-row>
             </div>
           </div>
         </div>
