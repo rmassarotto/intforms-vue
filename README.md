@@ -1,4 +1,6 @@
-# intforms-vue
+# TCC - Intforms
+
+Intforms is an application that allow create and access forms by QR code
 
 ## Build Setup
 
