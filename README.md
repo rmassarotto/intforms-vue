@@ -21,6 +21,8 @@ $ yarn generate
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
+## Screenshots
+
 Form screen
 ![Screenshot_4](https://user-images.githubusercontent.com/5855415/131265092-917c8254-7e6b-4d3e-8a95-7acb42b36bd3.png)
 
